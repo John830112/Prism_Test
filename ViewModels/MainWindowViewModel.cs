@@ -52,7 +52,11 @@ namespace PSamples.ViewModels
 
         private void ShowViewBButtonExecute()
         {
-            _regionManager.RequestNavigate("ContentRegion", nameof(ViewB));
+            var p = new NavigationParameters();
+            p.Add(nameof(ViewBViewModel.MyLabel), SystemDateLabel);
+
+
+            _regionManager.RequestNavigate("ContentRegion", nameof(ViewB), p);
         }
     }
 }

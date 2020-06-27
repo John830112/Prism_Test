@@ -8,6 +8,7 @@
             <Label Content="화면B"
                    FontSize="30"/>
             <Label Content="{Binding MyLabel}"/>
+            <TextBox/>
         </StackPanel>
     </Grid>
 </UserControl>
