@@ -2,6 +2,7 @@
 using Prism.Ioc;
 using Prism.Modularity;
 using System.Windows;
+using PSamples.ViewModels;
 
 namespace PSamples
 {
@@ -19,6 +20,7 @@ namespace PSamples
         {
             containerRegistry.RegisterForNavigation<ViewA>();
             containerRegistry.RegisterForNavigation<ViewB>();
+            containerRegistry.RegisterForNavigation<ViewC, ViewCViewModel>();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
+using Prism.Services.Dialogs;
 using PSamples.Views;
 using System;
 
@@ -12,8 +13,10 @@ namespace PSamples.ViewModels
         public DelegateCommand SystemDateUpdateButton { get; }
         public DelegateCommand ShowViewAButton { get; }
         public DelegateCommand ShowViewBButton { get; }
+        public DelegateCommand ShowViewCButton { get; }
 
         private readonly IRegionManager _regionManager;
+        private readonly IDialogService _dialogService;
         
         private string _title = "PSampes";
         public string Title
@@ -23,15 +26,18 @@ namespace PSamples.ViewModels
         }
 
 
-
-
-        public MainWindowViewModel(IRegionManager regionManager)
+        public MainWindowViewModel(IRegionManager regionManager, 
+                                   IDialogService dialogService)
         {
             _regionManager = regionManager;
+            _dialogService = dialogService;
+            
             SystemDateUpdateButton = new DelegateCommand(SystemDateUpdateButtonExecute);
             ShowViewAButton = new DelegateCommand(ShowViewAButtonExecute);
             ShowViewBButton = new DelegateCommand(ShowViewBButtonExecute);
+            ShowViewCButton = new DelegateCommand(ShowViewCButtonExecute);
         }
+
 
         private string _systemDateLabel = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
         public string SystemDateLabel
@@ -57,6 +63,22 @@ namespace PSamples.ViewModels
 
 
             _regionManager.RequestNavigate("ContentRegion", nameof(ViewB), p);
+        }
+
+        private void ShowViewCButtonExecute()
+        {
+            var p = new DialogParameters();
+            p.Add(nameof(ViewCViewModel.ViewCTextBox), SystemDateLabel);
+            
+            _dialogService.ShowDialog(nameof(ViewC), p, ViewCClose);
+        }
+
+        private void ViewCClose(IDialogResult dialogResult)
+        {
+            if(dialogResult.Result == ButtonResult.OK)
+            {
+                SystemDateLabel = dialogResult.Parameters.GetValue<string>(nameof(ViewCViewModel.ViewCTextBox));
+            }
         }
     }
 }
