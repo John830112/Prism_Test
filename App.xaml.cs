@@ -21,6 +21,7 @@ namespace PSamples
             containerRegistry.RegisterForNavigation<ViewA>();
             containerRegistry.RegisterForNavigation<ViewB>();
             containerRegistry.RegisterForNavigation<ViewC, ViewCViewModel>();
+            containerRegistry.RegisterDialog<MessageBoxView, MessageBoxViewModel>();
         }
     }
 }
