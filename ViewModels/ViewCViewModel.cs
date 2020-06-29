@@ -11,28 +11,20 @@ namespace PSamples.ViewModels
 {
     public class ViewCViewModel : BindableBase, IDialogAware
     {
-        private string _viewCTextBox = "XXX";
-
+        /* -------------------------------------------------------------
+           IDialogAware에 정의되어 있으며 명칭 변경 불가능하고 화면 닫는 대리자.
+           ------------------------------------------------------------- */
         public event Action<IDialogResult> RequestClose;
-
         public DelegateCommand OKButton { get; }
-
         IDialogService _dialogService;
+        public string Title => "ViewC의 타이틀";
 
-
+        private string _viewCTextBox = "XXX";
         public string ViewCTextBox
         {
-            get
-            {
-                return _viewCTextBox;
-            }
-            set
-            {
-                SetProperty(ref _viewCTextBox, value);
-            }
+            get { return _viewCTextBox; }
+            set { SetProperty(ref _viewCTextBox, value); }
         }
-
-        public string Title => "ViewC의 타이틀";
 
         public ViewCViewModel(IDialogService dialogService)
         {
@@ -42,8 +34,8 @@ namespace PSamples.ViewModels
 
         private void OKButtonExecute()
         {
-            // MessageBox.Show("Save 합니다.");
-
+            MessageBox.Show("Save 합니다.");
+            
             var message = new DialogParameters();
             message.Add(nameof(MessageBoxViewModel.Message), "저장합니다");
             _dialogService.ShowDialog(nameof(MessageBoxView), message, null);
@@ -51,21 +43,34 @@ namespace PSamples.ViewModels
 
             var p = new DialogParameters();
             p.Add(nameof(ViewCTextBox), ViewCTextBox);
+            /* -------------------------------------------------------------
+               IDialogAware에 정의 되어 있는 RequestClose를 Invoke하면 화면이 
+               닫치고 DialogResult와 파리멑가 호출처의 콜벡함수에 통지된다. 
+               ------------------------------------------------------------- */
             RequestClose?.Invoke(new DialogResult(ButtonResult.OK, p));
         }
 
         public bool CanCloseDialog()
         {
+            /* -------------------------------------------------------------
+               이 화면을 닫을 수 있는지? 의미입니다. 닫을 수 있게 할려면  
+               True로 한다.
+               ------------------------------------------------------------- */
             return true;
         }
 
         public void OnDialogClosed()
         {
-            
+            /* -------------------------------------------------------------
+               이 창이 닫힐때 동작한다.
+               ------------------------------------------------------------- */
         }
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
+            /* -------------------------------------------------------------
+               이 창이 열릴 때 동작합니다. 파라미터를 받을 경우 여기서 받는다.
+               ------------------------------------------------------------- */
             ViewCTextBox = parameters.GetValue<String>(nameof(ViewCTextBox));
         }
     }

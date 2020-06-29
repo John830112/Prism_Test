@@ -5,6 +5,7 @@
         prism:ViewModelLocator.AutoWireViewModel="True"
         Title="{Binding Title}" Height="350" Width="525"
         WindowStartupLocation="CenterScreen">
+    
     <Grid>
         <StackPanel>
             <Label Content="시스템 일시"/>
@@ -14,6 +15,8 @@
             <Button Content="Show View B" Command="{Binding ShowViewBButton}"/>
             <Button Content="Show View C" Command="{Binding ShowViewCButton}"/>
 
+            
+            <!-- 화면을 천이 할때 표시할 컨텐츠 컨트롤 "ContentRegion"의 이름으로 화면 지정 -->
             <ContentControl prism:RegionManager.RegionName="ContentRegion" />
             
         </StackPanel>

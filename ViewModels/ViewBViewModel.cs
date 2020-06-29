@@ -11,7 +11,7 @@ namespace PSamples.ViewModels
     {
         public ViewBViewModel()
         {
-
+            
         }
 
         private string _myLabel = string.Empty;
@@ -27,14 +27,9 @@ namespace PSamples.ViewModels
                나비게이션이 옮겨 왔을때 실행된다. 파라미터를 받고 싶은 경우는 여기에서 
                navigationContext로부터 취득가능.
                -------------------------------------------------------------*/
-            MyLabel = navigationContext.Parameters.GetValue<string>(nameof(MyLabel));
+            MyLabel += navigationContext.Parameters.GetValue<string>(nameof(MyLabel));
+            MyLabel += navigationContext.Parameters.GetValue<string>("a");
         }
-
-
-
-
-
-
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
@@ -47,11 +42,6 @@ namespace PSamples.ViewModels
                -------------------------------------------------------------*/
             return true;
         }
-
-
-
-
-
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
