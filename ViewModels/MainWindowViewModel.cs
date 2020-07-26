@@ -18,7 +18,7 @@ namespace PSamples.ViewModels
         private readonly IRegionManager _regionManager;
         private readonly IDialogService _dialogService;
         
-        private string _title = "PSampes";
+        private string _title = " PSampes ";
         public string Title
         {
             get { return _title; }
@@ -77,7 +77,7 @@ namespace PSamples.ViewModels
             var p = new DialogParameters();
             p.Add(nameof(ViewCViewModel.ViewCTextBox), SystemDateLabel);
             
-            //dialog를 표시하는 함수(뷰명칭, 파라미터, 콜벡함수)
+            //dialog를 표시하는 함수(뷰명칭, 파라미터, 콜벡함수->화면 닫았을때의 이벤트 함수)
             _dialogService.ShowDialog(nameof(ViewC), p, ViewCClose);
         }
 

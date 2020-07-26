@@ -12,10 +12,12 @@ namespace PSamples.ViewModels
     public class ViewCViewModel : BindableBase, IDialogAware
     {
         /* -------------------------------------------------------------
-           IDialogAware에 정의되어 있으며 명칭 변경 불가능하고 화면 닫는 대리자.
+           PopUp화면을 표시하는 경우는 대상의 ViewModel에서 IDialogAware을 실장하고 있지 않으면 
+           동작 하지 않는다.
            ------------------------------------------------------------- */
         public event Action<IDialogResult> RequestClose;
         public DelegateCommand OKButton { get; }
+
         IDialogService _dialogService;
         public string Title => "ViewC의 타이틀";
 
@@ -42,10 +44,10 @@ namespace PSamples.ViewModels
 
 
             var p = new DialogParameters();
-            p.Add(nameof(ViewCTextBox), ViewCTextBox);
+            p.Add(nameof(ViewCTextBox), ViewCTextBox+"1");
             /* -------------------------------------------------------------
                IDialogAware에 정의 되어 있는 RequestClose를 Invoke하면 화면이 
-               닫치고 DialogResult와 파리멑가 호출처의 콜벡함수에 통지된다. 
+               닫치고 DialogResult와 파리미터가 호출처의 콜벡함수에 통지된다. 
                ------------------------------------------------------------- */
             RequestClose?.Invoke(new DialogResult(ButtonResult.OK, p));
         }
