@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using PSamples.Services;
+using PSamples.Views;
 
 namespace PSamples.ViewModels
 {
@@ -19,6 +21,9 @@ namespace PSamples.ViewModels
         public DelegateCommand OKButton { get; }
 
         IDialogService _dialogService;
+        IMessageService _messageService;
+
+
         public string Title => "ViewC의 타이틀";
 
         private string _viewCTextBox = "XXX";
@@ -28,23 +33,37 @@ namespace PSamples.ViewModels
             set { SetProperty(ref _viewCTextBox, value); }
         }
 
-        public ViewCViewModel(IDialogService dialogService)
+        public ViewCViewModel(IDialogService dialogService) : this(dialogService, new MessageService())
+        { }
+        public ViewCViewModel(IDialogService dialogService, IMessageService messageService) 
         {
             OKButton = new DelegateCommand(OKButtonExecute);
             _dialogService = dialogService;
+            _messageService = messageService;
         }
 
         private void OKButtonExecute()
         {
-            MessageBox.Show("Save 합니다.");
+            //MessageBox.Show("Save 합니다.");
             
-            var message = new DialogParameters();
-            message.Add(nameof(MessageBoxViewModel.Message), "저장합니다");
-            _dialogService.ShowDialog(nameof(MessageBoxView), message, null);
+            //var message = new DialogParameters();
+            //message.Add(nameof(MessageBoxViewModel.Message), "저장합니다");
+            //_dialogService.ShowDialog(nameof(MessageBoxView), message, null);
+
+
+
+
+
+
+
+            if(_messageService.Question("저장 합니까?") == MessageBoxResult.OK)
+            {
+                _messageService.ShowDialog("저장 했습니다");
+            }
 
 
             var p = new DialogParameters();
-            p.Add(nameof(ViewCTextBox), ViewCTextBox+"1");
+            p.Add(nameof(ViewCTextBox), ViewCTextBox);
             /* -------------------------------------------------------------
                IDialogAware에 정의 되어 있는 RequestClose를 Invoke하면 화면이 
                닫치고 DialogResult와 파리미터가 호출처의 콜벡함수에 통지된다. 
