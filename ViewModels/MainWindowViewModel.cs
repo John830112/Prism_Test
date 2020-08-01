@@ -14,10 +14,21 @@ namespace PSamples.ViewModels
         public DelegateCommand ShowViewAButton { get; }
         public DelegateCommand ShowViewBButton { get; }
         public DelegateCommand ShowViewCButton { get; }
+        public DelegateCommand ShowVidwDButton { get; }
 
         private readonly IRegionManager _regionManager;
         private readonly IDialogService _dialogService;
-        
+
+
+        //ShowA 활성화 및 비활성화 프로퍼티
+        private bool _showAEnabled = false;
+        public bool ShowAEnabled
+        {
+            get { return _showAEnabled; }
+            set { SetProperty(ref _showAEnabled, value); }
+        }
+
+
         private string _title = " PSampes ";
         public string Title
         {
@@ -33,11 +44,13 @@ namespace PSamples.ViewModels
             _dialogService = dialogService;
             
             SystemDateUpdateButton = new DelegateCommand(SystemDateUpdateButtonExecute);
-            ShowViewAButton = new DelegateCommand(ShowViewAButtonExecute);
+
+            ShowViewAButton = new DelegateCommand(ShowViewAButtonExecute).ObservesCanExecute(()=> ShowAEnabled);    //ShowAEnable 속성 활성화 비활성화의 관찰하고 INotifyPropertyChanged를 구현
+
             ShowViewBButton = new DelegateCommand(ShowViewBButtonExecute);
             ShowViewCButton = new DelegateCommand(ShowViewCButtonExecute);
+            ShowVidwDButton = new DelegateCommand(ShowViewDButtonExecute);
         }
-
 
         private string _systemDateLabel = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
         public string SystemDateLabel
@@ -48,6 +61,7 @@ namespace PSamples.ViewModels
 
         private void SystemDateUpdateButtonExecute()
         {
+            ShowAEnabled = true;        
             SystemDateLabel = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
         }
 
@@ -79,6 +93,12 @@ namespace PSamples.ViewModels
             
             //dialog를 표시하는 함수(뷰명칭, 파라미터, 콜벡함수->화면 닫았을때의 이벤트 함수)
             _dialogService.ShowDialog(nameof(ViewC), p, ViewCClose);
+        }
+
+        //ViewD를 천이하는 실행 함수
+        private void ShowViewDButtonExecute()
+        {
+            _regionManager.RequestNavigate("ContentRegion", nameof(ViewD));
         }
 
         //ShowDialog가 닫혔을때 실행하는 콜벡 함수

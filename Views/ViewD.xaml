@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="PSamples.Views.ViewD"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"             
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
+    <Grid>
+        <StackPanel>
+
+            <ListBox ItemsSource="{Binding Areas}"
+                     Height="100"
+                     Width="200"
+                     Margin="10"/>
+            <ComboBox ItemsSource="{Binding Products}"
+                  SelectedValuePath="Value"
+                  DisplayMemberPath="DisplayValue"
+                  Width="150"
+                  Margin="10"
+                  SelectedItem="{Binding SelectedProduct, Mode=TwoWay}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <prism:InvokeCommandAction Command="{Binding ProductsSelectionChanged}"
+                                                               TriggerParameterPath="AddedItems"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ComboBox>
+            <Label Content="{Binding SelectedText}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

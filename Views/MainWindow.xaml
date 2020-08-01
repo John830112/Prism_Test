@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
-        Title="{Binding Title}" Height="350" Width="525"
+        Title="{Binding Title}" Height="500" Width="525"
         WindowStartupLocation="CenterScreen">
     
     <Grid>
@@ -14,8 +14,9 @@
             <Button Content="Show view A" Command="{Binding ShowViewAButton}"/>
             <Button Content="Show View B" Command="{Binding ShowViewBButton}"/>
             <Button Content="Show View C" Command="{Binding ShowViewCButton}"/>
-
+            <Button Content="Show view D List box, ComboBox" Command="{Binding ShowVidwDButton}"/>
             
+
             <!-- 화면을 천이 할때 표시할 컨텐츠 컨트롤 "ContentRegion"의 이름으로 화면 지정 -->
             <ContentControl prism:RegionManager.RegionName="ContentRegion" />
             
